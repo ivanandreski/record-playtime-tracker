@@ -1,4 +1,8 @@
-# sv
+# Record Playtime Tracker V2
+
+App is designed to be self hosted for single user. Imports your vinyl collection from Discogs.com. Gets data for the album, release and track length, stores it in a local db. User is able to list all imported albums, and add play sessions for each. The user can also save their record needles as an entry in the db which is then related to a play-session (album played + needle). If the album doesn't have track length in discogs, the user can add a value in the modifier field to set custom playtime in seconds
+
+## SvelteKit Docs
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
