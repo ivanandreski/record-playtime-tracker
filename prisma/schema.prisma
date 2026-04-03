@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Album {
+  id           Int            @id @default(autoincrement())
+  discogsId    Int?           @unique @map("discogs_id")
+  title        String
+  artist       String
+  year         Int?
+  genre        String?
+  imageUrl     String?        @map("image_url")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  releases     AlbumRelease[]
+
+  @@map("album")
+}
+
+model AlbumRelease {
+  id                Int            @id @default(autoincrement())
+  albumId           Int            @map("album_id")
+  discogsReleaseId  Int?           @unique @map("discogs_release_id")
+  label             String?
+  catalogNumber     String?        @map("catalog_number")
+  country           String?
+  year              Int?
+  format            String?        // e.g. "Vinyl, LP, Album"
+  notes             String?
+  createdAt         DateTime       @default(now()) @map("created_at")
+  album             Album          @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  tracks            Track[]
+  playSessions      PlaySession[]
+
+  @@map("album_release")
+}
+
+model Track {
+  id              Int                @id @default(autoincrement())
+  albumReleaseId  Int                @map("album_release_id")
+  position        String             // e.g. "A1", "B2"
+  title           String
+  durationSeconds Int?               @map("duration_seconds")
+  createdAt       DateTime           @default(now()) @map("created_at")
+  albumRelease    AlbumRelease       @relation(fields: [albumReleaseId], references: [id], onDelete: Cascade)
+  playSessionTracks PlaySessionTrack[]
+
+  @@map("track")
+}
+
+model Stylus {
+  id               Int           @id @default(autoincrement())
+  name             String
+  brand            String?
+  model            String?
+  totalPlaySeconds Int           @default(0) @map("total_play_seconds")
+  isActive         Boolean       @default(true) @map("is_active")
+  installedAt      DateTime      @default(now()) @map("installed_at")
+  createdAt        DateTime      @default(now()) @map("created_at")
+  playSessions     PlaySession[]
+
+  @@map("stylus")
+}
+
+model PlaySession {
+  id               Int                @id @default(autoincrement())
+  albumReleaseId   Int                @map("album_release_id")
+  stylusId         Int                @map("stylus_id")
+  startedAt        DateTime           @default(now()) @map("started_at")
+  endedAt          DateTime?          @map("ended_at")
+  totalPlaySeconds Int?               @map("total_play_seconds")
+  notes            String?
+  createdAt        DateTime           @default(now()) @map("created_at")
+  albumRelease     AlbumRelease       @relation(fields: [albumReleaseId], references: [id])
+  stylus           Stylus             @relation(fields: [stylusId], references: [id])
+  tracks           PlaySessionTrack[]
+
+  @@map("play_session")
+}
+
+model PlaySessionTrack {
+  id            Int         @id @default(autoincrement())
+  playSessionId Int         @map("play_session_id")
+  trackId       Int         @map("track_id")
+  playedAt      DateTime    @default(now()) @map("played_at")
+  playSession   PlaySession @relation(fields: [playSessionId], references: [id], onDelete: Cascade)
+  track         Track       @relation(fields: [trackId], references: [id])
+
+  @@map("play_session_track")
+}

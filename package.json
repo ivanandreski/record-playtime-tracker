@@ -7,13 +7,17 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"prepare": "svelte-kit sync || echo ''",
+		"prepare": "svelte-kit sync && prisma generate || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test:unit": "vitest",
-		"test": "npm run test:unit -- --run"
+		"test": "npm run test:unit -- --run",
+		"db:push": "prisma db push",
+		"db:pull": "prisma db pull",
+		"db:generate": "prisma generate",
+		"db:studio": "prisma studio"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^2.0.1",
@@ -30,6 +34,7 @@
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.4.1",
 		"prettier-plugin-tailwindcss": "^0.7.2",
+		"prisma": "^7.6.0",
 		"svelte": "^5.48.2",
 		"svelte-check": "^4.3.5",
 		"tailwindcss": "^4.1.18",
@@ -37,5 +42,9 @@
 		"typescript-eslint": "^8.53.1",
 		"vite": "^7.3.1",
 		"vitest": "^4.0.18"
+	},
+	"dependencies": {
+		"@prisma/adapter-pg": "^7.6.0",
+		"@prisma/client": "^7.6.0"
 	}
 }
