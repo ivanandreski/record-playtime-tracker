@@ -6,23 +6,18 @@
 
 <div class="p-6">
 	{#if data.releases.length === 0}
-		<p class="text-muted-foreground">No albums yet. Import your collection to get started.</p>
+		<p class="text-neutral-400">No albums yet. Import your collection to get started.</p>
 	{:else}
-		<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+		<div class="collection-grid">
 			{#each data.releases as release}
-				<a href="/album/{release.id}" class="group flex flex-col gap-2">
-					<div class="aspect-square w-full overflow-hidden rounded-md bg-neutral-800">
+				<a href="/album/{release.id}" class="collection-item">
+					<div class="collection-item__cover">
 						{#if release.album.imageUrl}
-							<img
-								src={release.album.imageUrl}
-								alt="{release.album.title} cover"
-								class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
-							/>
+							<img src={release.album.imageUrl} alt="{release.album.name} cover" />
 						{:else}
-							<div class="flex h-full w-full items-center justify-center">
+							<div class="collection-item__cover-placeholder">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
-									class="h-12 w-12 text-neutral-500"
 									fill="none"
 									viewBox="0 0 24 24"
 									stroke="currentColor"
@@ -37,11 +32,11 @@
 							</div>
 						{/if}
 					</div>
-					<div class="min-w-0">
-						<p class="truncate text-sm font-medium group-hover:underline">{release.album.title}</p>
-						<p class="truncate text-xs text-neutral-400">{release.album.artist}</p>
-						{#if release.album.year}
-							<p class="text-xs text-neutral-500">{release.album.year}</p>
+					<div class="collection-item__info">
+						<p class="collection-item__title">{release.album.name}</p>
+						<p class="collection-item__artist">{release.album.artist}</p>
+						{#if release.album.releaseYear}
+							<p class="collection-item__year">{release.album.releaseYear}</p>
 						{/if}
 					</div>
 				</a>
