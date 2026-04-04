@@ -1,13 +1,18 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { PageData, ActionData } from './$types';
+	import { enhance } from '$app/forms';
 
-	let { data }: { data: PageData } = $props();
+	let { data, form }: { data: PageData; form: ActionData } = $props();
 
 	const release = $derived(data.release);
 	const tracks = $derived(data.release.tracks);
 
 	let checkedIds = $state<Set<string>>(new Set());
 	let playtimeInput = $state<number>(0);
+	let selectedStylusId = $state<string>('');
+	$effect(() => {
+		selectedStylusId = data.styluses[0]?.id ?? '';
+	});
 
 	// Group tracks by side (leading letter(s) of position, e.g. "A" from "A1")
 	const sides = $derived.by(() => {
@@ -90,7 +95,7 @@
 		<!-- Track list -->
 		<div class="flex min-w-0 flex-1 flex-col gap-4">
 			<!-- Controls -->
-			<div class="flex gap-2">
+			<div class="flex items-center gap-2">
 				<button
 					onclick={selectAll}
 					class="rounded-md border border-neutral-700 bg-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-200 hover:bg-neutral-700"
@@ -103,6 +108,16 @@
 				>
 					Reset
 				</button>
+				{#if data.styluses.length > 0}
+					<select
+						bind:value={selectedStylusId}
+						class="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-neutral-500"
+					>
+						{#each data.styluses as stylus}
+							<option value={stylus.id}>{stylus.name ?? `Stylus #${stylus.id}`}</option>
+						{/each}
+					</select>
+				{/if}
 			</div>
 
 			<!-- Tracks grouped by side -->
@@ -134,41 +149,67 @@
 			{/each}
 
 			<!-- Submit row -->
-			<div class="mt-2 flex flex-col gap-2">
-				<div class="flex items-center gap-3">
+			<form method="POST" action="?/logSession" use:enhance class="mt-2 flex flex-col gap-3">
+				{#if data.styluses.length === 0}
+					<div class="flex items-center justify-between rounded-md border border-neutral-700 bg-neutral-800/50 px-4 py-3">
+						<p class="text-sm text-neutral-400">You need a stylus before logging a session.</p>
+						<a
+							href="/styluses"
+							class="rounded-md border border-neutral-700 bg-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-200 hover:bg-neutral-700"
+						>
+							Create Stylus
+						</a>
+					</div>
+				{:else}
+					<!-- Hidden inputs for checked track IDs -->
+					{#each [...checkedIds] as id}
+						<input type="hidden" name="trackId" value={id} />
+					{/each}
+					<input type="hidden" name="stylusId" value={selectedStylusId} />
 					{#if data.allDurationsZero}
-						<input
-							type="number"
-							bind:value={playtimeInput}
-							placeholder="Override playtime (s)"
-							class="w-52 rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-500 focus:outline-none"
-						/>
-						{#if data.suggestedPlaytime !== null}
-							<button
-								type="button"
-								onclick={autofillPlaytime}
-								disabled={!allTracksChecked}
-								class="rounded-md border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm font-medium text-neutral-300 hover:bg-neutral-700 disabled:opacity-40"
-							>
-								Autofill ({data.suggestedPlaytime}s)
-							</button>
-						{/if}
+						<input type="hidden" name="playtimeOverride" value={playtimeInput} />
 					{/if}
-					<button
-						class="rounded-md bg-white px-4 py-2 text-sm font-semibold text-black hover:bg-neutral-200 disabled:opacity-40"
-					>
-						Log Session
-					</button>
-				</div>
-				{#if data.suggestedPlaytime !== null}
-					<p class="text-xs text-neutral-400">
-						A previous play session was found for this album with a total playtime of
-						<span class="font-medium text-neutral-200"
-							>{formatDuration(data.suggestedPlaytime)}</span
-						>.
-					</p>
+
+					<div class="flex items-center gap-3">
+						{#if data.allDurationsZero}
+							<input
+								type="number"
+								bind:value={playtimeInput}
+								placeholder="Override playtime (s)"
+								class="w-52 rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-500 focus:outline-none"
+							/>
+							{#if data.suggestedPlaytime !== null}
+								<button
+									type="button"
+									onclick={autofillPlaytime}
+									disabled={!allTracksChecked}
+									class="rounded-md border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm font-medium text-neutral-300 hover:bg-neutral-700 disabled:opacity-40"
+								>
+									Autofill ({data.suggestedPlaytime}s)
+								</button>
+							{/if}
+						{/if}
+						<button
+							type="submit"
+							disabled={checkedIds.size === 0}
+							class="rounded-md bg-white px-4 py-2 text-sm font-semibold text-black hover:bg-neutral-200 disabled:opacity-40"
+						>
+							Log Session
+						</button>
+					</div>
+					{#if form?.error}
+						<p class="text-xs text-red-400">{form.error}</p>
+					{/if}
+					{#if data.suggestedPlaytime !== null}
+						<p class="text-xs text-neutral-400">
+							A previous play session was found for this album with a total playtime of
+							<span class="font-medium text-neutral-200"
+								>{formatDuration(data.suggestedPlaytime)}</span
+							>.
+						</p>
+					{/if}
 				{/if}
-			</div>
+			</form>
 		</div>
 	</div>
 </div>
