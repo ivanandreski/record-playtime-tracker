@@ -40,21 +40,19 @@
 	});
 </script>
 
-<div class="p-6">
-	<a href="/play-sessions" class="mb-6 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-neutral-200">
-		← Play Sessions
-	</a>
+<div class="session-detail">
+	<a href="/play-sessions" class="session-detail__back">← Play Sessions</a>
 
-	<div class="mt-4 flex gap-8">
+	<div class="session-detail__layout">
 		<!-- Album cover -->
-		<div class="w-56 shrink-0">
+		<div class="session-detail__cover-panel">
 			{#if album.imageUrl}
-				<img src={album.imageUrl} alt="cover" class="w-full rounded-md object-cover shadow-md" />
+				<img src={album.imageUrl} alt="cover" class="session-detail__cover-img" />
 			{:else}
-				<div class="flex h-56 w-56 items-center justify-center rounded-md bg-neutral-800">
+				<div class="session-detail__cover-placeholder">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
-						class="h-16 w-16 text-neutral-500"
+						class="session-detail__cover-placeholder-icon"
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke="currentColor"
@@ -68,39 +66,37 @@
 					</svg>
 				</div>
 			{/if}
-			<div class="mt-3 flex flex-col gap-0.5">
-				<p class="font-semibold text-white">{album.name ?? '—'}</p>
-				<p class="text-sm text-neutral-400">{album.artist ?? '—'}</p>
+			<div class="session-detail__meta">
+				<p class="session-detail__album-name">{album.name ?? '—'}</p>
+				<p class="session-detail__album-artist">{album.artist ?? '—'}</p>
 				{#if album.releaseYear}
-					<p class="text-xs text-neutral-500">{album.releaseYear}</p>
+					<p class="session-detail__album-year">{album.releaseYear}</p>
 				{/if}
-				<div class="mt-3 flex flex-col gap-1 border-t border-neutral-800 pt-3">
-					<p class="text-xs text-neutral-500">
-						<span class="text-neutral-400">Date</span> — {formatDate(session.createdAt)}
+				<div class="session-detail__info">
+					<p class="session-detail__info-row">
+						<span class="session-detail__info-label">Date</span> — {formatDate(session.createdAt)}
 					</p>
-					<p class="text-xs text-neutral-500">
-						<span class="text-neutral-400">Playtime</span> — {formatPlaytime(session.playtime)}
+					<p class="session-detail__info-row">
+						<span class="session-detail__info-label">Playtime</span> — {formatPlaytime(session.playtime)}
 					</p>
-					<p class="text-xs text-neutral-500">
-						<span class="text-neutral-400">Stylus</span> — {session.stylus.name ?? `Stylus #${session.stylus.id}`}
+					<p class="session-detail__info-row">
+						<span class="session-detail__info-label">Stylus</span> — {session.stylus.name ?? `Stylus #${session.stylus.id}`}
 					</p>
 				</div>
 			</div>
 		</div>
 
 		<!-- Track list -->
-		<div class="flex min-w-0 flex-1 flex-col gap-4">
+		<div class="session-detail__tracks">
 			{#each sides as [side, sideTracks]}
 				<div>
-					<h3 class="mb-1 text-xs font-semibold uppercase tracking-widest text-neutral-500">
-						Side {side}
-					</h3>
-					<div class="divide-y divide-neutral-800 rounded-md border border-neutral-700">
+					<h3 class="session-detail__side-label">Side {side}</h3>
+					<div class="session-detail__side-tracks">
 						{#each sideTracks as track}
-							<div class="flex items-center gap-3 px-3 py-2">
-								<span class="w-8 shrink-0 text-xs text-neutral-500">{track.position ?? ''}</span>
-								<span class="flex-1 text-sm text-neutral-200">{track.name ?? '—'}</span>
-								<span class="text-xs tabular-nums text-neutral-400">{formatDuration(track.duration)}</span>
+							<div class="session-detail__track-row">
+								<span class="session-detail__track-position">{track.position ?? ''}</span>
+								<span class="session-detail__track-name">{track.name ?? '—'}</span>
+								<span class="session-detail__track-duration">{formatDuration(track.duration)}</span>
 							</div>
 						{/each}
 					</div>
