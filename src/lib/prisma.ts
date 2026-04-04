@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { dev } from '$app/environment';
-import { DATABASE_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
-const adapter = new PrismaPg({ connectionString: DATABASE_URL });
+const adapter = new PrismaPg({ connectionString: env.DATABASE_URL });
 
 // Prevent multiple Prisma instances during Vite HMR in dev
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
