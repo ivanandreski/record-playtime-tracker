@@ -16,27 +16,27 @@
 	}
 </script>
 
-<div class="p-6">
-	<section class="mb-10">
-		<h2 class="mb-3 text-lg font-semibold text-neutral-200">Active</h2>
+<div class="styluses-page">
+	<section class="styluses-page__section">
+		<h2 class="styluses-page__heading">Active</h2>
 		{#if activeStyluses.length === 0}
-			<p class="text-neutral-400">No active styluses.</p>
+			<p class="styluses-page__empty">No active styluses.</p>
 		{:else}
-			<div class="overflow-x-auto rounded-md border border-neutral-700">
-				<table class="w-full text-sm">
-					<thead class="border-b border-neutral-700 bg-neutral-800 text-neutral-400">
+			<div class="styluses-page__table-wrap">
+				<table class="styluses-table">
+					<thead class="styluses-table__head">
 						<tr>
-							<th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">Name</th>
-							<th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">Total Playtime</th>
-              <th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">Description</th>
+							<th class="styluses-table__th">Name</th>
+							<th class="styluses-table__th">Total Playtime</th>
+							<th class="styluses-table__th">Description</th>
 						</tr>
 					</thead>
-					<tbody class="divide-y divide-neutral-800">
+					<tbody class="styluses-table__body">
 						{#each activeStyluses as stylus}
-							<tr class="hover:bg-neutral-800/40">
-								<td class="px-4 py-3 font-medium text-neutral-200">{stylus.name ?? `Stylus #${stylus.id}`}</td>
-								<td class="px-4 py-3 text-left tabular-nums text-neutral-300">{formatPlaytime(stylus.playtime)}</td>
-                <td class="px-4 py-3 text-neutral-400">{stylus.description ?? '—'}</td>
+							<tr class="styluses-table__row">
+								<td class="styluses-table__cell styluses-table__cell--name">{stylus.name ?? `Stylus #${stylus.id}`}</td>
+								<td class="styluses-table__cell styluses-table__cell--numeric">{formatPlaytime(stylus.playtime)}</td>
+								<td class="styluses-table__cell styluses-table__cell--muted">{stylus.description ?? '—'}</td>
 							</tr>
 						{/each}
 					</tbody>
@@ -45,26 +45,26 @@
 		{/if}
 	</section>
 
-	<section>
-		<h2 class="mb-3 text-lg font-semibold text-neutral-400">Retired</h2>
+	<section class="styluses-page__section">
+		<h2 class="styluses-page__heading">Retired</h2>
 		{#if retiredStyluses.length === 0}
-			<p class="text-neutral-500">No retired styluses.</p>
+			<p class="styluses-page__empty">No retired styluses.</p>
 		{:else}
-			<div class="overflow-x-auto rounded-md border border-neutral-700">
-				<table class="w-full text-sm">
-					<thead class="border-b border-neutral-700 bg-neutral-800 text-neutral-400">
+			<div class="styluses-page__table-wrap">
+				<table class="styluses-table">
+					<thead class="styluses-table__head">
 						<tr>
-							<th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">Name</th>
-							<th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">Description</th>
-							<th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">Total Playtime</th>
+							<th class="styluses-table__th">Name</th>
+							<th class="styluses-table__th">Description</th>
+							<th class="styluses-table__th">Total Playtime</th>
 						</tr>
 					</thead>
-					<tbody class="divide-y divide-neutral-800">
+					<tbody class="styluses-table__body">
 						{#each retiredStyluses as stylus}
-							<tr class="hover:bg-neutral-800/40 opacity-60">
-								<td class="px-4 py-3 font-medium text-neutral-300">{stylus.name ?? `Stylus #${stylus.id}`}</td>
-								<td class="px-4 py-3 text-neutral-500">{stylus.description ?? '—'}</td>
-								<td class="px-4 py-3 text-left tabular-nums text-neutral-400">{formatPlaytime(stylus.playtime)}</td>
+							<tr class="styluses-table__row styluses-table__row--retired">
+								<td class="styluses-table__cell styluses-table__cell--name">{stylus.name ?? `Stylus #${stylus.id}`}</td>
+								<td class="styluses-table__cell styluses-table__cell--muted">{stylus.description ?? '—'}</td>
+								<td class="styluses-table__cell styluses-table__cell--numeric">{formatPlaytime(stylus.playtime)}</td>
 							</tr>
 						{/each}
 					</tbody>
