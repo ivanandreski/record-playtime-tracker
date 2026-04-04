@@ -65,7 +65,10 @@
 				</thead>
 				<tbody class="divide-y divide-neutral-800">
 					{#each filteredSessions as session}
-						<tr class="hover:bg-neutral-800/40">
+						<tr
+							class="cursor-pointer hover:bg-neutral-800/40"
+							onclick={() => window.location.href = `/play-sessions/${session.id}`}
+						>
 							<td class="px-3 py-2">
 								{#if session.albumRelease.album.imageUrl}
 									<img src={session.albumRelease.album.imageUrl} alt="cover" class="h-10 w-10 rounded object-cover" />

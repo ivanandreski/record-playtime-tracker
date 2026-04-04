@@ -28,5 +28,14 @@ export const load: PageServerLoad = async () => {
 		})
 	]);
 
-	return { styluses, playSessions };
+	return {
+		styluses,
+		playSessions: playSessions.map((s) => ({
+			...s,
+			id: String(s.id),
+			albumsReleaseId: String(s.albumReleaseId),
+			stylusId: String(s.stylusId),
+			stylus: { id: String(s.stylus.id) }
+		}))
+	};
 };
