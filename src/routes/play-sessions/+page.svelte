@@ -33,8 +33,6 @@
 </script>
 
 <div class="p-6">
-	<h1 class="mb-6 text-2xl font-bold tracking-tight">Play Sessions</h1>
-
 	<div class="mb-6">
 		<label for="stylus-select" class="mb-1 block text-sm font-medium text-neutral-300">
 			Stylus

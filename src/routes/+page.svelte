@@ -5,8 +5,6 @@
 </script>
 
 <div class="p-6">
-	<h1 class="mb-6 text-2xl font-bold tracking-tight">Your Collection</h1>
-
 	{#if data.releases.length === 0}
 		<p class="text-muted-foreground">No albums yet. Import your collection to get started.</p>
 	{:else}

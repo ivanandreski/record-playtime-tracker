@@ -17,8 +17,6 @@
 </script>
 
 <div class="p-6">
-	<h1 class="mb-6 text-2xl font-bold tracking-tight">Styluses</h1>
-
 	<section class="mb-10">
 		<h2 class="mb-3 text-lg font-semibold text-neutral-200">Active</h2>
 		{#if activeStyluses.length === 0}
