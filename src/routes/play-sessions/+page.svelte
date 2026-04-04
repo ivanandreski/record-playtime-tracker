@@ -3,7 +3,10 @@
 
 	let { data }: { data: PageData } = $props();
 
-	let selectedStylusId = $state<string>(String(data.styluses[0]?.id ?? ''));
+	let selectedStylusId = $state<string>('');
+	$effect(() => {
+		selectedStylusId = String(data.styluses[0]?.id ?? '');
+	});
 
 	const filteredSessions = $derived(
 		selectedStylusId
