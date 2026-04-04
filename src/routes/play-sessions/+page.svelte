@@ -32,16 +32,10 @@
 	}
 </script>
 
-<div class="p-6">
-	<div class="mb-6">
-		<label for="stylus-select" class="mb-1 block text-sm font-medium text-neutral-300">
-			Stylus
-		</label>
-		<select
-			id="stylus-select"
-			bind:value={selectedStylusId}
-			class="w-64 rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-neutral-500"
-		>
+<div class="sessions-page">
+	<div class="sessions-filter">
+		<label for="stylus-select" class="sessions-filter__label">Stylus</label>
+		<select id="stylus-select" bind:value={selectedStylusId} class="sessions-filter__select">
 			{#each data.styluses as stylus}
 				<option value={String(stylus.id)}>{stylus.name ?? `Stylus #${stylus.id}`}</option>
 			{/each}
@@ -49,43 +43,43 @@
 	</div>
 
 	{#if filteredSessions.length === 0}
-		<p class="text-neutral-400">No play sessions found.</p>
+		<p class="sessions-empty">No play sessions found.</p>
 	{:else}
-		<div class="overflow-x-auto rounded-md border border-neutral-700">
-			<table class="w-full text-sm">
-				<thead class="border-b border-neutral-700 bg-neutral-800 text-neutral-400">
+		<div class="sessions-table-wrap">
+			<table class="sessions-table">
+				<thead class="sessions-table__head">
 					<tr>
-						<th class="px-4 py-3"></th>
-						<th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">Artist</th>
-						<th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">Album</th>
-						<th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">Year</th>
-						<th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">Playtime</th>
-						<th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">Date</th>
+						<th></th>
+						<th>Artist</th>
+						<th>Album</th>
+						<th>Year</th>
+						<th>Playtime</th>
+						<th>Date</th>
 					</tr>
 				</thead>
-				<tbody class="divide-y divide-neutral-800">
+				<tbody class="sessions-table__body">
 					{#each filteredSessions as session}
 						<tr
-							class="cursor-pointer hover:bg-neutral-800/40"
+							class="sessions-table__row"
 							onclick={() => window.location.href = `/play-sessions/${session.id}`}
 						>
-							<td class="px-3 py-2">
+							<td class="sessions-table__cover-cell">
 								{#if session.albumRelease.album.imageUrl}
-									<img src={session.albumRelease.album.imageUrl} alt="cover" class="h-10 w-10 rounded object-cover" />
+									<img src={session.albumRelease.album.imageUrl} alt="cover" class="sessions-table__cover" />
 								{:else}
-									<div class="h-10 w-10 rounded bg-neutral-700"></div>
+									<div class="sessions-table__cover-placeholder"></div>
 								{/if}
 							</td>
-							<td class="px-4 py-3 text-left font-medium text-neutral-300">{session.albumRelease.album.artist ?? '—'}</td>
-							<td class="px-4 py-3 text-left text-neutral-300">{session.albumRelease.album.name ?? '—'}</td>
-							<td class="px-4 py-3 text-left text-neutral-400">{session.albumRelease.album.releaseYear ?? '—'}</td>
-							<td class="px-4 py-3 text-left tabular-nums text-neutral-300">{formatPlaytime(session.playtime)}</td>
-							<td class="px-4 py-3 text-left tabular-nums text-neutral-400">{formatDate(session.createdAt)}</td>
+							<td class="sessions-table__cell sessions-table__cell--bold">{session.albumRelease.album.artist ?? '—'}</td>
+							<td class="sessions-table__cell">{session.albumRelease.album.name ?? '—'}</td>
+							<td class="sessions-table__cell sessions-table__cell--muted">{session.albumRelease.album.releaseYear ?? '—'}</td>
+							<td class="sessions-table__cell sessions-table__cell--num">{formatPlaytime(session.playtime)}</td>
+							<td class="sessions-table__cell sessions-table__cell--muted sessions-table__cell--num">{formatDate(session.createdAt)}</td>
 						</tr>
 					{/each}
 				</tbody>
 			</table>
 		</div>
-		<p class="mt-3 text-xs text-neutral-500">{filteredSessions.length} session{filteredSessions.length !== 1 ? 's' : ''}</p>
+		<p class="sessions-count">{filteredSessions.length} session{filteredSessions.length !== 1 ? 's' : ''}</p>
 	{/if}
 </div>
