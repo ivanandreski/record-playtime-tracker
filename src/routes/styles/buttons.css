@@ -1,0 +1,28 @@
+.btn {
+  @apply inline-flex items-center justify-center rounded-md font-medium transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-neutral-500;
+  @apply disabled:cursor-not-allowed disabled:opacity-40;
+}
+
+.btn-primary {
+  @apply bg-neutral-900 text-white hover:bg-neutral-700;
+  @apply dark:bg-white dark:text-black dark:hover:bg-neutral-200;
+}
+
+.btn-secondary {
+  @apply border border-neutral-300 bg-white text-neutral-700 hover:bg-neutral-100;
+  @apply dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700;
+}
+
+.btn-ghost {
+  @apply text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900;
+  @apply dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200;
+}
+
+.btn-sm {
+  @apply px-3 py-1.5 text-sm;
+}
+
+.btn-md {
+  @apply px-4 py-2 text-sm;
+}

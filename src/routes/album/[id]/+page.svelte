@@ -96,18 +96,8 @@
 		<div class="flex min-w-0 flex-1 flex-col gap-4">
 			<!-- Controls -->
 			<div class="flex items-center gap-2">
-				<button
-					onclick={selectAll}
-					class="rounded-md border border-neutral-700 bg-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-200 hover:bg-neutral-700"
-				>
-					Full Album
-				</button>
-				<button
-					onclick={reset}
-					class="rounded-md border border-neutral-700 bg-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-400 hover:bg-neutral-700"
-				>
-					Reset
-				</button>
+				<button onclick={selectAll} class="btn btn-secondary btn-sm">Full Album</button>
+				<button onclick={reset} class="btn btn-ghost btn-sm">Reset</button>
 				{#if data.styluses.length > 0}
 					<select
 						bind:value={selectedStylusId}
@@ -153,10 +143,7 @@
 				{#if data.styluses.length === 0}
 					<div class="flex items-center justify-between rounded-md border border-neutral-700 bg-neutral-800/50 px-4 py-3">
 						<p class="text-sm text-neutral-400">You need a stylus before logging a session.</p>
-						<a
-							href="/styluses"
-							class="rounded-md border border-neutral-700 bg-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-200 hover:bg-neutral-700"
-						>
+						<a href="/styluses" class="btn btn-secondary btn-sm">
 							Create Stylus
 						</a>
 					</div>
@@ -179,21 +166,17 @@
 								class="w-52 rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white placeholder-neutral-500 focus:ring-2 focus:ring-neutral-500 focus:outline-none"
 							/>
 							{#if data.suggestedPlaytime !== null}
-								<button
-									type="button"
-									onclick={autofillPlaytime}
-									disabled={!allTracksChecked}
-									class="rounded-md border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm font-medium text-neutral-300 hover:bg-neutral-700 disabled:opacity-40"
-								>
-									Autofill ({data.suggestedPlaytime}s)
-								</button>
+							<button
+								type="button"
+								onclick={autofillPlaytime}
+								disabled={!allTracksChecked}
+								class="btn btn-secondary"
+							>
+								Autofill ({data.suggestedPlaytime}s)
+							</button>
 							{/if}
 						{/if}
-						<button
-							type="submit"
-							disabled={checkedIds.size === 0}
-							class="rounded-md bg-white px-4 py-2 text-sm font-semibold text-black hover:bg-neutral-200 disabled:opacity-40"
-						>
+						<button type="submit" disabled={checkedIds.size === 0} class="btn btn-primary">
 							Log Session
 						</button>
 					</div>

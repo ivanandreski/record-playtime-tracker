@@ -1,5 +1,2 @@
 @import 'tailwindcss';
-
-h1 {
-  color: green;
-}
+@import './styles/buttons.css';
