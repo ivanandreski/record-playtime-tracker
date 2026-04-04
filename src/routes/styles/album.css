@@ -1,0 +1,120 @@
+/* ── Layout ───────────────────────────────────────── */
+.album-page {
+  @apply p-8;
+}
+
+.album-page__layout {
+  @apply flex flex-col gap-6 md:flex-row md:gap-10;
+}
+
+/* ── Cover panel ──────────────────────────────────── */
+.album-cover {
+  @apply w-full shrink-0 md:w-72;
+}
+
+.album-cover__img {
+  @apply w-full rounded-lg object-cover shadow-md md:w-72;
+}
+
+.album-cover__placeholder {
+  @apply flex h-64 w-full items-center justify-center rounded-lg bg-neutral-100 md:h-72 md:w-72;
+  @apply dark:bg-neutral-800;
+}
+
+.album-cover__placeholder svg {
+  @apply h-20 w-20 text-neutral-400 dark:text-neutral-500;
+}
+
+.album-cover__info {
+  @apply mt-4 flex flex-col gap-1;
+}
+
+.album-cover__title {
+  @apply text-xl font-bold text-black dark:text-white;
+}
+
+.album-cover__artist {
+  @apply text-base text-neutral-700 dark:text-neutral-400;
+}
+
+.album-cover__year {
+  @apply text-base text-neutral-600 dark:text-neutral-500;
+}
+
+/* ── Track list panel ─────────────────────────────── */
+.album-tracks {
+  @apply flex min-w-0 flex-1 flex-col gap-4;
+}
+
+.album-tracks__controls {
+  @apply flex items-center gap-2;
+}
+
+.album-tracks__stylus-select {
+  @apply rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-neutral-400;
+  @apply dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:focus:ring-neutral-500;
+}
+
+.album-tracks__side-label {
+  @apply mb-1 text-sm font-semibold uppercase tracking-widest text-neutral-500;
+}
+
+.album-tracks__list {
+  @apply divide-y divide-neutral-200 rounded-md border border-neutral-200;
+  @apply dark:divide-neutral-800 dark:border-neutral-700;
+}
+
+.album-tracks__row {
+  @apply flex cursor-pointer items-center gap-4 px-4 py-3;
+}
+
+.album-tracks__row:hover {
+  @apply bg-neutral-50 dark:bg-neutral-800/50;
+}
+
+.album-tracks__position {
+  @apply w-10 shrink-0 text-sm text-neutral-400 dark:text-neutral-500;
+}
+
+.album-tracks__name {
+  @apply flex-1 text-base text-black dark:text-neutral-200;
+}
+
+.album-tracks__duration {
+  @apply text-sm tabular-nums text-neutral-500 dark:text-neutral-400;
+}
+
+/* ── Log session form ─────────────────────────────── */
+.album-log-form {
+  @apply mt-2 flex flex-col gap-3;
+}
+
+.album-log-form__no-stylus {
+  @apply flex items-center justify-between rounded-md border border-neutral-200 bg-neutral-50 px-4 py-3;
+  @apply dark:border-neutral-700 dark:bg-neutral-800/50;
+}
+
+.album-log-form__no-stylus-text {
+  @apply text-sm text-neutral-600 dark:text-neutral-400;
+}
+
+.album-log-form__actions {
+  @apply flex items-center gap-3;
+}
+
+.album-log-form__playtime-input {
+  @apply w-52 rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-black placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-400;
+  @apply dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:placeholder-neutral-500 dark:focus:ring-neutral-500;
+}
+
+.album-log-form__hint {
+  @apply text-sm text-neutral-600 dark:text-neutral-400;
+}
+
+.album-log-form__hint strong {
+  @apply font-medium text-black dark:text-neutral-200;
+}
+
+.album-log-form__error {
+  @apply text-sm text-red-600 dark:text-red-400;
+}
