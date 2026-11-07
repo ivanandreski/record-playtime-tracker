@@ -1,4 +1,4 @@
-import { DISCOGS_TOKEN, DISCOGS_USER_AGENT, DISCOGS_USERNAME } from '$env/static/private'
+import { env } from '$env/dynamic/private'
 
 export interface AppProperties {
   discogsToken: string;
@@ -6,8 +6,9 @@ export interface AppProperties {
   discogsUsername: string;
 }
 
+// getters: read env at access time, not module load
 export const appProperties: AppProperties = {
-  discogsToken: DISCOGS_TOKEN,
-  discogsUserAgent: DISCOGS_USER_AGENT,
-  discogsUsername: DISCOGS_USERNAME
+  get discogsToken() { return env.DISCOGS_TOKEN ?? ''; },
+  get discogsUserAgent() { return env.DISCOGS_USER_AGENT ?? 'record-playtime-tracker'; },
+  get discogsUsername() { return env.DISCOGS_USERNAME ?? ''; }
 }

@@ -1,0 +1,18 @@
+services:
+  app:
+    image: record-playtime-tracker:${APP_TAG:-latest}
+    pull_policy: never # no registry: only use the locally loaded image
+    restart: unless-stopped
+    ports:
+      - '${APP_PORT:-3000}:3000'
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL in .env}
+      ORIGIN: ${ORIGIN:?set ORIGIN in .env, e.g. http://192.168.1.10:3000}
+      DISCOGS_TOKEN: ${DISCOGS_TOKEN:?set DISCOGS_TOKEN in .env}
+      DISCOGS_USERNAME: ${DISCOGS_USERNAME:?set DISCOGS_USERNAME in .env}
+      DISCOGS_USER_AGENT: ${DISCOGS_USER_AGENT:-record-playtime-tracker}
+    extra_hosts:
+      - 'host.docker.internal:host-gateway' # lets DATABASE_URL reach Postgres on the server host
+    logging:
+      driver: json-file
+      options: { max-size: '10m', max-file: '3' }

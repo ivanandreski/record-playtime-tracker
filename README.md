@@ -2,24 +2,31 @@
 
 App is designed to be self hosted for single user. Imports your vinyl collection from Discogs.com. Gets data for the album, release and track length, stores it in a local db. User is able to list all imported albums, and add play sessions for each. The user can also save their record needles as an entry in the db which is then related to a play-session (album played + needle). If the album doesn't have track length in discogs, the user can add a value in the modifier field to set custom playtime in seconds
 
-## Taking over the legacy database
+## Deploying
 
-The Prisma schema matches the old .NET/EF Core database exactly, so this app can run on it in place. `0_init` describes the existing tables, and later migrations change them from there.
-
-One-time cutover on the server, before the first start of the new container:
+No registry: build an amd64 image on your machine, copy it to the server, run it with compose. Config is runtime-only (`deploy/.env`), so the same image runs anywhere.
 
 ```sh
-# 1. Back up the old DB
-pg_dump -Fc -d "$DATABASE_URL" -f records-before-takeover.dump
-
-# 2. Tell Prisma the existing tables ARE 0_init (records it, changes nothing)
-docker compose run --rm app node node_modules/.bin/prisma migrate resolve --applied 0_init
-
-# 3. Start normally: the container runs `prisma migrate deploy` (applies 1_created_at_defaults and later)
-docker compose up -d app
+npm run image   # dist/record-playtime-tracker-<sha>.tar.gz (FORCE=1 to allow a dirty tree)
+scp dist/*.tar.gz deploy/docker-compose.yaml deploy/.env.example user@server:~/record-playtime-tracker/
+# on the server: cp .env.example .env && edit it
+gunzip -c record-playtime-tracker-<sha>.tar.gz | docker load
+APP_TAG=<sha> docker compose up -d
 ```
 
-If you skip step 2, `migrate deploy` refuses with error P3005 ("database schema is not empty") and runs nothing, so the app won't start, but no data is touched. Run step 2, then start again. The `__EFMigrationsHistory` table is left alone, and you can drop it once the old app is gone for good.
+Rollback: `APP_TAG=<old sha> docker compose up -d`. If Postgres runs on the server host, use `host.docker.internal` in `DATABASE_URL` and allow the docker subnet in `pg_hba.conf` / `listen_addresses`.
+
+### Taking over the legacy database
+
+The Prisma schema matches the old .NET/EF Core database, so the app runs on it in place. One-time, before the first start:
+
+```sh
+pg_dump -Fc -d "$DATABASE_URL" -f records-before-takeover.dump
+docker compose run --rm app node node_modules/.bin/prisma migrate resolve --applied 0_init
+docker compose up -d
+```
+
+Skipping the `resolve` step makes `migrate deploy` fail with P3005 and the app won't start; no data is touched. `__EFMigrationsHistory` can be dropped once the old app is gone.
 
 ## SvelteKit Docs
 
