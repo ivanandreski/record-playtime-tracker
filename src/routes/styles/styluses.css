@@ -1,0 +1,59 @@
+.styluses-page {
+	@apply p-8;
+}
+
+.styluses-page__section {
+	@apply mb-12;
+}
+
+.styluses-page__heading {
+	@apply mb-4 text-xl font-bold text-black dark:text-white;
+}
+
+.styluses-page__empty {
+	@apply text-base text-black dark:text-neutral-400;
+}
+
+.styluses-page__table-wrap {
+	@apply overflow-x-auto rounded-md border border-neutral-200 dark:border-neutral-700;
+}
+
+.styluses-table {
+	@apply w-full;
+}
+
+.styluses-table__head {
+	@apply border-b border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800;
+}
+
+.styluses-table__th {
+	@apply px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider text-black dark:text-neutral-400;
+}
+
+.styluses-table__body {
+	@apply divide-y divide-neutral-200 dark:divide-neutral-800;
+}
+
+.styluses-table__row {
+	@apply hover:bg-neutral-50 dark:hover:bg-neutral-800/40;
+}
+
+.styluses-table__row--retired {
+	@apply opacity-60;
+}
+
+.styluses-table__cell {
+	@apply px-4 py-3 text-base text-black dark:text-neutral-200;
+}
+
+.styluses-table__cell--name {
+	@apply font-semibold;
+}
+
+.styluses-table__cell--numeric {
+	@apply tabular-nums;
+}
+
+.styluses-table__cell--muted {
+	@apply text-black dark:text-neutral-400;
+}

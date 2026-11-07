@@ -1,0 +1,85 @@
+.sessions-page {
+  @apply p-8;
+}
+
+/* ── Filter bar ───────────────────────────────────── */
+.sessions-filter {
+  @apply mb-6 flex items-center gap-3;
+}
+
+.sessions-filter__label {
+  @apply text-base font-medium text-black dark:text-neutral-200;
+}
+
+.sessions-filter__select {
+  @apply rounded-md border border-neutral-300 bg-white px-3 py-2 text-base text-black focus:outline-none focus:ring-2 focus:ring-neutral-400;
+  @apply dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:focus:ring-neutral-500;
+}
+
+/* ── Empty state ──────────────────────────────────── */
+.sessions-empty {
+  @apply text-base text-neutral-600 dark:text-neutral-400;
+}
+
+/* ── Table ────────────────────────────────────────── */
+.sessions-table-wrap {
+  @apply overflow-x-auto rounded-lg border border-neutral-200 dark:border-neutral-700;
+}
+
+.sessions-table {
+  @apply w-full;
+}
+
+.sessions-table__head {
+  @apply border-b border-neutral-200 bg-neutral-50;
+  @apply dark:border-neutral-700 dark:bg-neutral-800;
+}
+
+.sessions-table__head th {
+  @apply px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400;
+}
+
+.sessions-table__head th:first-child {
+  @apply w-16;
+}
+
+.sessions-table__body {
+  @apply divide-y divide-neutral-100 dark:divide-neutral-800;
+}
+
+.sessions-table__row {
+  @apply cursor-pointer transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800/40;
+}
+
+.sessions-table__cover-cell {
+  @apply px-3 py-3;
+}
+
+.sessions-table__cover {
+  @apply h-12 w-12 rounded-md object-cover;
+}
+
+.sessions-table__cover-placeholder {
+  @apply h-12 w-12 rounded-md bg-neutral-200 dark:bg-neutral-700;
+}
+
+.sessions-table__cell {
+  @apply px-4 py-3 text-left text-base text-black dark:text-neutral-200;
+}
+
+.sessions-table__cell--bold {
+  @apply font-semibold;
+}
+
+.sessions-table__cell--muted {
+  @apply text-neutral-600 dark:text-neutral-400;
+}
+
+.sessions-table__cell--num {
+  @apply tabular-nums;
+}
+
+/* ── Footer count ─────────────────────────────────── */
+.sessions-count {
+  @apply mt-3 text-sm text-neutral-500 dark:text-neutral-500;
+}

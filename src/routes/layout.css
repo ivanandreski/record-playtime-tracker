@@ -1,5 +1,7 @@
 @import 'tailwindcss';
-
-h1 {
-  color: green;
-}
+@import './styles/buttons.css';
+@import './styles/collection.css';
+@import './styles/album.css';
+@import './styles/play-sessions.css';
+@import './styles/play-session-detail.css';
+@import './styles/styluses.css';

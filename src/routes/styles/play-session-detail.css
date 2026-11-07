@@ -1,0 +1,85 @@
+.session-detail {
+	@apply p-8;
+}
+
+.session-detail__back {
+	@apply mb-6 inline-flex items-center gap-1 text-base text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-neutral-200;
+}
+
+.session-detail__layout {
+	@apply mt-6 flex flex-col gap-10 md:flex-row;
+}
+
+/* Cover panel */
+.session-detail__cover-panel {
+	@apply w-full shrink-0 md:w-80;
+}
+
+.session-detail__cover-img {
+	@apply w-full rounded-md object-cover shadow-md;
+}
+
+.session-detail__cover-placeholder {
+	@apply flex h-80 w-80 items-center justify-center rounded-md bg-neutral-200 dark:bg-neutral-800;
+}
+
+.session-detail__cover-placeholder-icon {
+	@apply h-20 w-20 text-neutral-400 dark:text-neutral-500;
+}
+
+.session-detail__meta {
+	@apply mt-4 flex flex-col gap-1;
+}
+
+.session-detail__album-name {
+	@apply text-2xl font-bold text-black dark:text-white;
+}
+
+.session-detail__album-artist {
+	@apply text-lg text-black dark:text-neutral-300;
+}
+
+.session-detail__album-year {
+	@apply text-base text-black dark:text-neutral-400;
+}
+
+.session-detail__info {
+	@apply mt-4 flex flex-col gap-2 border-t border-neutral-200 pt-4 dark:border-neutral-800;
+}
+
+.session-detail__info-row {
+	@apply text-base text-black dark:text-neutral-300;
+}
+
+.session-detail__info-label {
+	@apply font-semibold text-black dark:text-white;
+}
+
+/* Track list */
+.session-detail__tracks {
+	@apply flex min-w-0 flex-1 flex-col gap-8;
+}
+
+.session-detail__side-label {
+	@apply mb-2 text-sm font-semibold uppercase tracking-widest text-neutral-500;
+}
+
+.session-detail__side-tracks {
+	@apply divide-y divide-neutral-200 rounded-md border border-neutral-200 dark:divide-neutral-800 dark:border-neutral-700;
+}
+
+.session-detail__track-row {
+	@apply flex items-center gap-4 px-4 py-3;
+}
+
+.session-detail__track-position {
+	@apply w-10 shrink-0 text-base text-black dark:text-neutral-400;
+}
+
+.session-detail__track-name {
+	@apply flex-1 text-lg text-black dark:text-neutral-200;
+}
+
+.session-detail__track-duration {
+	@apply text-base tabular-nums text-black dark:text-neutral-400;
+}

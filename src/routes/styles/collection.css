@@ -1,0 +1,50 @@
+.collection-grid {
+  @apply grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6;
+}
+
+.collection-item {
+  @apply flex flex-col gap-0 overflow-hidden rounded-lg border border-neutral-200 transition-shadow hover:shadow-md;
+  @apply dark:border-neutral-700 dark:hover:shadow-black/40;
+}
+
+.collection-item__cover {
+  @apply aspect-square w-full overflow-hidden bg-neutral-100;
+  @apply dark:bg-neutral-800;
+}
+
+.collection-item__cover img {
+  @apply h-full w-full object-cover transition-transform duration-200;
+}
+
+.collection-item:hover .collection-item__cover img {
+  transform: scale(1.05);
+}
+
+.collection-item__cover-placeholder {
+  @apply flex h-full w-full items-center justify-center;
+}
+
+.collection-item__cover-placeholder svg {
+  @apply h-12 w-12 text-neutral-400 dark:text-neutral-500;
+}
+
+.collection-item__info {
+  @apply min-w-0 px-3 py-2;
+}
+
+.collection-item__title {
+  @apply truncate text-base font-semibold text-black;
+  @apply dark:text-neutral-100;
+}
+
+.collection-item:hover .collection-item__title {
+  text-decoration: underline;
+}
+
+.collection-item__artist {
+  @apply truncate text-sm text-neutral-700 dark:text-neutral-400;
+}
+
+.collection-item__year {
+  @apply text-sm text-neutral-600 dark:text-neutral-500;
+}
