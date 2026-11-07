@@ -72,7 +72,7 @@
 							</td>
 							<td class="sessions-table__cell sessions-table__cell--bold">{session.albumRelease.album.artist ?? '—'}</td>
 							<td class="sessions-table__cell">{session.albumRelease.album.name ?? '—'}</td>
-							<td class="sessions-table__cell sessions-table__cell--muted">{session.albumRelease.album.releaseYear ?? '—'}</td>
+							<td class="sessions-table__cell sessions-table__cell--muted">{session.albumRelease.album.originalYear ?? session.albumRelease.album.releaseYear ?? '—'}</td>
 							<td class="sessions-table__cell sessions-table__cell--num">{formatPlaytime(session.playtime)}</td>
 							<td class="sessions-table__cell sessions-table__cell--muted sessions-table__cell--num">{formatDate(session.createdAt)}</td>
 						</tr>

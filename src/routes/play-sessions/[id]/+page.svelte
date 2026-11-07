@@ -70,7 +70,7 @@
 				<p class="session-detail__album-name">{album.name ?? '—'}</p>
 				<p class="session-detail__album-artist">{album.artist ?? '—'}</p>
 				{#if album.releaseYear}
-					<p class="session-detail__album-year">{album.releaseYear}</p>
+					<p class="session-detail__album-year">{album.originalYear ?? album.releaseYear}</p>
 				{/if}
 				<div class="session-detail__info">
 					<p class="session-detail__info-row">

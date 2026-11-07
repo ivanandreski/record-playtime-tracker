@@ -12,6 +12,7 @@ export const load: PageServerLoad = async () => {
 					name: true,
 					artist: true,
 					releaseYear: true,
+					originalYear: true,
 					imageUrl: true,
 				},
 			},

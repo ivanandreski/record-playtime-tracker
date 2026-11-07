@@ -36,7 +36,7 @@
 						<p class="collection-item__title">{release.album.name}</p>
 						<p class="collection-item__artist">{release.album.artist}</p>
 						{#if release.album.releaseYear}
-							<p class="collection-item__year">{release.album.releaseYear}</p>
+							<p class="collection-item__year">{release.album.originalYear ?? release.album.releaseYear}</p>
 						{/if}
 					</div>
 				</a>

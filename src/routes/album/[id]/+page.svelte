@@ -72,7 +72,7 @@
 				<p class="album-cover__title">{release.album.name ?? '—'}</p>
 				<p class="album-cover__artist">{release.album.artist ?? '—'}</p>
 				{#if release.album.releaseYear}
-					<p class="album-cover__year">{release.album.releaseYear}</p>
+					<p class="album-cover__year">{release.album.originalYear ?? release.album.releaseYear}</p>
 				{/if}
 			</div>
 		</div>

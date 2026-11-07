@@ -30,6 +30,11 @@ interface DiscogsRelease {
   tracklist: DiscogsTrack[];
 }
 
+interface DiscogsMaster {
+  id: number;
+  year: number;
+}
+
 interface DiscogsCollectionItem {
   id: number;           // release id (same as basic_information.id)
   instance_id: number;
@@ -108,11 +113,31 @@ const timeoutIfRateLimited = async (requestsRemaining: number) => {
   }
 };
 
+const fetchMasterYear = async (
+  masterId: number,
+  cache: Map<number, number | null>
+): Promise<number | null> => {
+  if (!(masterId > 0)) return null;
+  if (cache.has(masterId)) return cache.get(masterId)!;
+  let year: number | null = null;
+  try {
+    const { requestsRemaining, data } = await doGet<DiscogsMaster>(`/masters/${masterId}`);
+    await timeoutIfRateLimited(requestsRemaining);
+    year = data.year || null; // Discogs sends 0 for unknown
+  } catch (error) {
+    console.error(`[Master] Failed for master id=${masterId}:`, error);
+    return null; // not cached, so a later pressing retries
+  }
+  cache.set(masterId, year);
+  return year;
+};
+
 // --- DB persistence ---
 
 const saveRelease = async (
   releaseDetails: DiscogsRelease,
-  collectionItem: DiscogsCollectionItem
+  collectionItem: DiscogsCollectionItem,
+  masterYears: Map<number, number | null>
 ) => {
   const albumDiscogsId = String(
     releaseDetails.master_id > 0 ? releaseDetails.master_id : releaseDetails.id
@@ -128,12 +153,16 @@ const saveRelease = async (
 
   console.log(`[Save] "${releaseDetails.title}" by ${artistName ?? "Unknown"} (releaseId: ${releaseDiscogsId}, masterId: ${albumDiscogsId}, ${trackCount} tracks)`);
 
+  const originalYear = await fetchMasterYear(releaseDetails.master_id, masterYears);
+
   // Upsert Album
   const albumData = {
     name: releaseDetails.title,
     artist: artistName,
     imageUrl: primaryImage?.uri ?? null,
     releaseYear: releaseDetails.year ?? 0,
+    // only overwrite when we got a value, so a failed call keeps a good year
+    ...(originalYear != null && { originalYear }),
   };
   let album = await prisma.album.findFirst({ where: { discogsId: albumDiscogsId } });
   if (album) {
@@ -202,7 +231,8 @@ const saveRelease = async (
 
 const fetchRelease = async (
   releaseId: number,
-  collectionItem: DiscogsCollectionItem
+  collectionItem: DiscogsCollectionItem,
+  masterYears: Map<number, number | null>
 ): Promise<DiscogsRelease | null> => {
   try {
     console.log(`[Fetch] Fetching release details for id=${releaseId} ("${collectionItem.basic_information.title}")`);
@@ -211,7 +241,7 @@ const fetchRelease = async (
     );
     await timeoutIfRateLimited(requestsRemaining);
 
-    await saveRelease(data, collectionItem);
+    await saveRelease(data, collectionItem, masterYears);
 
     return data;
   } catch (error) {
@@ -225,6 +255,7 @@ export const fetchCollection = async () => {
   let page = 1;
   let totalProcessed = 0;
   let totalFailed = 0;
+  const masterYears = new Map<number, number | null>();
 
   while (true) {
     try {
@@ -241,7 +272,7 @@ export const fetchCollection = async () => {
       for (let i = 0; i < data.releases.length; i++) {
         const item = data.releases[i];
         console.log(`[Collection] Processing ${totalProcessed + i + 1} — release id=${item.id} "${item.basic_information.title}"`);
-        const result = await fetchRelease(item.id, item);
+        const result = await fetchRelease(item.id, item, masterYears);
         if (result) {
           totalProcessed++;
         } else {
