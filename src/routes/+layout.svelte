@@ -14,14 +14,14 @@
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
-<header class="border-b border-neutral-800 bg-neutral-950 px-6 py-3">
+<header class="border-b border-neutral-200 bg-white px-6 py-3 dark:border-neutral-800 dark:bg-neutral-950">
 	<nav class="flex items-center gap-6">
 		{#each navLinks as link}
 			<a
 				href={link.href}
 				class="text-sm transition-colors {$page.url.pathname === link.href
-					? 'font-bold text-white'
-					: 'font-normal text-neutral-400 hover:text-neutral-200'}"
+					? 'font-bold text-black dark:text-white'
+					: 'font-normal text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-neutral-200'}"
 			>
 				{link.label}
 			</a>

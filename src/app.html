@@ -1,11 +1,15 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light dark" />
 		%sveltekit.head%
 	</head>
-	<body class="bg-neutral-950 text-neutral-100" data-sveltekit-preload-data="hover">
+	<body
+		class="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100"
+		data-sveltekit-preload-data="hover"
+	>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
