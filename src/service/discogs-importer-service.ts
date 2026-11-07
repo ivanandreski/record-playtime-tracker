@@ -1,4 +1,4 @@
-import { fetchCollection } from "./discogs-api-service";
+import { fetchCollection } from "@/service/discogs-api-service";
 
 export type DiscogsImportState = {
   isRunning: boolean;

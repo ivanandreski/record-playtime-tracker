@@ -1,5 +1,5 @@
 import { setTimeout } from "node:timers/promises";
-import { appProperties } from "../config/app-properties";
+import { appProperties } from "@/config/app-properties";
 import { prisma } from "$lib/prisma";
 
 // --- Discogs API types ---
