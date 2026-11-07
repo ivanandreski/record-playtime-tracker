@@ -12,30 +12,28 @@ const state: DiscogsImportState = {
   message: null,
 };
 
-const startImport = () => {
+const initImport = async (): Promise<boolean> => {
+  if (state.isRunning) return false;
   console.log("Starting import");
   state.isRunning = true;
   state.percentage = 0;
-};
+  state.message = "Starting…";
 
-const endImport = () => {
-  console.log("Ending import");
-  state.isRunning = false;
-  state.percentage = null;
-  state.message = null;
-};
-
-const initImport = async (): Promise<boolean> => {
   try {
-    startImport();
-
-    await fetchCollection();
-
-    endImport();
+    const { totalProcessed, totalFailed } = await fetchCollection((done, total, title) => {
+      state.percentage = total > 0 ? Math.round((done / total) * 100) : 0;
+      state.message = `${done}/${total} — ${title}`;
+    });
+    state.message = `Imported ${totalProcessed}, failed ${totalFailed}`;
     return true;
   } catch (e) {
-    endImport();
+    console.error("Import failed", e);
+    state.message = "Import failed";
     return false;
+  } finally {
+    console.log("Ending import");
+    state.isRunning = false;
+    state.percentage = 100;
   }
 };
 

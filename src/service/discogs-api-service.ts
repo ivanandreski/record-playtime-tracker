@@ -55,6 +55,7 @@ interface DiscogsCollectionResponse {
   pagination: {
     pages: number;
     page: number;
+    items: number;
   };
 }
 
@@ -250,7 +251,9 @@ const fetchRelease = async (
   }
 };
 
-export const fetchCollection = async () => {
+export const fetchCollection = async (
+  onProgress?: (done: number, total: number, title: string) => void
+) => {
   console.log(`[Collection] Starting import for user: ${appProperties.discogsUsername}`);
   let page = 1;
   let totalProcessed = 0;
@@ -279,6 +282,7 @@ export const fetchCollection = async () => {
           totalFailed++;
           console.warn(`[Collection] Skipped release id=${item.id} due to error.`);
         }
+        onProgress?.(totalProcessed + totalFailed, data.pagination.items, item.basic_information.title);
       }
 
       console.log(`[Collection] Page ${page}/${data.pagination.pages} complete. Running total: ${totalProcessed} saved, ${totalFailed} failed.`);
@@ -294,6 +298,7 @@ export const fetchCollection = async () => {
   }
 
   console.log(`[Collection] Import complete. Total saved: ${totalProcessed}, failed: ${totalFailed}.`);
+  return { totalProcessed, totalFailed };
 };
 
 // TODO: get image bytes or whatever is saved in db
